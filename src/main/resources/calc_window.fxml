@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox id="main-window" fx:id="mainLayout" prefHeight="190.0" prefWidth="255.0" spacing="5.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="task2.CalcWindow">
+
+   <Label fx:id="ttlText" prefHeight="17.0" prefWidth="257.0" text="text" />
+
+    <HBox alignment="CENTER_RIGHT" spacing="5.0">
+    <children>
+         <Label fx:id="curText" prefHeight="41.0" prefWidth="142.0" text="0">
+            <font>
+               <Font size="18.0" />
+            </font>
+         </Label>
+         <Button onAction="#btnClickResume" prefHeight="34.0" prefWidth="95.0" style="-fx-background-color: #9eafdd;" text="=">
+            <font>
+               <Font name="System Bold" size="22.0" />
+            </font>
+         </Button>
+    </children>
+    </HBox>
+
+    <HBox alignment="CENTER_LEFT" spacing="5.0">
+      <children>
+         <Button id="numBtn" onAction="#btnClickNum" text="7" />
+         <Button id="numBtn" onAction="#btnClickNum" text="8" />
+         <Button id="numBtn" onAction="#btnClickNum" text="9" />
+         <Button id="atnBtn" onAction="#btnClickAtn" text="+" />
+         <Button id="atnBtn" onAction="#btnClickAtn" text="-" />
+      </children>
+    </HBox>
+    <HBox alignment="CENTER_LEFT" spacing="5.0">
+        <children>
+            <Button id="numBtn" onAction="#btnClickNum" text="4" />
+            <Button id="numBtn" onAction="#btnClickNum" text="5" />
+            <Button id="numBtn" onAction="#btnClickNum" text="6" />
+            <Button id="atnBtn" onAction="#btnClickAtn" text="*" />
+            <Button id="atnBtn" onAction="#btnClickAtn" text="÷" />
+        </children>
+    </HBox>
+    <HBox alignment="CENTER_LEFT" spacing="5.0">
+        <children>
+            <Button id="numBtn" onAction="#btnClickNum" text="1" />
+            <Button id="numBtn" onAction="#btnClickNum" text="2" />
+            <Button id="numBtn" onAction="#btnClickNum" text="3" />
+        </children>
+    </HBox>
+    <HBox alignment="CENTER_LEFT" spacing="5.0">
+        <children>
+            <Button id="numBtn" onAction="#btnClickNum" prefHeight="45.0" prefWidth="98.0" text="0" />
+            <Button id="numBtn" onAction="#btnClickNum" text="." />
+            <Pane prefHeight="45.0" prefWidth="49.0" />
+            <Button id="atnBtn" onAction="#btnClickClear" text="C" />
+        </children>
+    </HBox>
+    <stylesheets>
+        <URL value="@styles_calc.css" />
+    </stylesheets>
+
+</VBox>

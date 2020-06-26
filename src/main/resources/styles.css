@@ -1,0 +1,11 @@
+#main-window {
+    -fx-padding: 5;
+}
+
+.button{
+    -fx-background-color: yellow;
+    -fx-font-size: 14px;
+}
+
+
+

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox id="main-window" fx:id="mainLayout"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="task1.ChatController">
+
+
+    <VBox alignment="CENTER" VBox.vgrow="ALWAYS">
+         <ListView fx:id="listMessages" prefHeight="350.0" prefWidth="200.0"/>
+        <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="400.0" spacing="10.0">
+            <TextField fx:id="txtMessageInput" HBox.hgrow="ALWAYS" promptText="Введите сообщение" onAction="#msgSend"/>
+            <Button fx:id="btnSendMessage" text="Отправить" onAction="#msgSend"/>
+        </HBox>
+    </VBox>
+
+    <stylesheets>
+        <URL value="@styles.css" />
+    </stylesheets>
+
+</VBox>

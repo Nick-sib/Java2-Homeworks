@@ -18,7 +18,7 @@ public class Lesson5_task1 {
         System.out.println(System.currentTimeMillis() - a);
 
 //этап 2
-        Arrays.fill(arr, 1);//для больш
+        Arrays.fill(arr, 1);//для большей идентичности сбрасываем все значения
         float[] a1 = new float[H];
         float[] a2 = new float[H];
 

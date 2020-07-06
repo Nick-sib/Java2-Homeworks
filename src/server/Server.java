@@ -49,10 +49,21 @@ public class Server {
         }
     }
 
-    void broadcastMsg(String msg){
+    void broadcastMsg(String msg, String from){
         for (ClientHandler client : clients) {
-            client.sendMsg(msg);
+            client.sendMsg(String.format("/from %s : %s", from, msg));
         }
+    }
+
+    boolean privateMSG(String msg, String nick, String from) {
+        boolean res = false;
+        for (ClientHandler client : clients) {
+            if (client.isYou(nick) || client.isYou(from)) {
+                client.sendMsg(String.format("/from %s : %s", from, msg));
+                res = true;
+            }
+        }
+        return res;
     }
 
     public void subscribe(ClientHandler clientHandler){
@@ -61,6 +72,14 @@ public class Server {
 
     public void unsubscribe(ClientHandler clientHandler){
         clients.remove(clientHandler);
+    }
+
+    boolean checkNick(String nick) {
+        //делаем ники только уникальными
+        for (ClientHandler client : clients)
+            if (client.getNick().equals(nick))
+                return false;
+        return true;
     }
 
 }

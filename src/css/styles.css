@@ -1,0 +1,12 @@
+#main-window {
+    -fx-padding: 5;
+}
+
+#btnSendMessage{
+    -fx-background-color: yellow;
+    -fx-font-size: 14px;
+}
+
+#hbox{
+    -fx-padding: 10;
+}

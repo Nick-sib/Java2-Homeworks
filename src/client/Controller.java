@@ -1,14 +1,18 @@
 package client;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -29,9 +33,14 @@ public class Controller implements Initializable {
     @FXML
     public PasswordField passwordField;
     @FXML
-    public HBox authPanel;
+    public VBox authPanel;
     @FXML
-    public HBox msgPanel;
+    public VBox msgPanel;
+    @FXML
+    public ListView listMessages;
+
+    ObservableList<String> chatMSGs = FXCollections.observableArrayList();
+
 
 
     private final int PORT = 8189;
@@ -53,9 +62,11 @@ public class Controller implements Initializable {
         authPanel.setManaged(!authenticated);
         msgPanel.setVisible(authenticated);
         msgPanel.setManaged(authenticated);
+
         if (!authenticated) {
             nick = "";
-        }
+        } else
+            listMessages.setItems(chatMSGs);
         setTitle(nick);
     }
 
@@ -98,9 +109,11 @@ public class Controller implements Initializable {
                             nick = str.split("\\s")[1];
                             setAuthenticated(true);
                             break;
-                        }
-
-                        textArea.appendText(str + "\n");
+                        } else
+                            if (str.startsWith("/err ")) {
+                                textArea.appendText(str.substring(5)+"\n");
+                            } else
+                                textArea.appendText(str + "\n");
                     }
 
 
@@ -112,8 +125,14 @@ public class Controller implements Initializable {
                             setAuthenticated(false);
                             break;
                         }
-
-                        textArea.appendText(str + "\n");
+                        if (str.startsWith("/from ")) {
+                            String[] p_str = str.split(" ",4);
+                            if (p_str[1].equals(nick))
+                                chatMSGs.add("Я <- " + p_str[3]);
+                            else
+                                chatMSGs.add(p_str[1] + " -> " + p_str[3]);
+                        }
+                        else chatMSGs.add(str);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();

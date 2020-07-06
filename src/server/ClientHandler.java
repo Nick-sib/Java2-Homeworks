@@ -36,18 +36,22 @@ public class ClientHandler {
                                     .getAuthService()
                                     .getNicknameByLoginAndPassword(token[1], token[2]);
                             if (newNick != null) {
-                                sendMsg("/authok " + newNick);
-                                nick = newNick;
-                                login = token[1];
-                                server.subscribe(this);
-                                System.out.printf("Клиент %s подключился \n", nick);
-                                break;
+                                if (!server.checkNick(newNick))
+                                    sendMsg("/err Сокет для такого ника и пароля уже занят");
+                                else {
+                                    sendMsg("/authok " + newNick);
+                                    nick = newNick;
+                                    login = token[1];
+                                    server.subscribe(this);
+                                    System.out.printf("Клиент %s подключился \n", nick);
+                                    break;
+                                }
                             } else {
-                                sendMsg("Неверный логин / пароль");
+                                sendMsg("/err Неверный логин / пароль");
                             }
                         }
 
-                        server.broadcastMsg(str);
+                        //server.broadcastMsg(str);
                     }
                     //цикл работы
                     while (true) {
@@ -57,8 +61,11 @@ public class ClientHandler {
                             out.writeUTF("/end");
                             break;
                         }
-
-                        server.broadcastMsg(str);
+                        if (str.startsWith("/w ")) {
+                            String[] p_str = str.split(" ");
+                            if (!server.privateMSG(p_str[2],p_str[1], nick))
+                                sendMsg("Нет такого клиента");
+                        } else server.broadcastMsg(str, nick);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -97,5 +104,9 @@ public class ClientHandler {
 
     public String getNick() {
         return nick;
+    }
+
+    boolean isYou(String nick){
+        return this.nick.equals(nick);
     }
 }

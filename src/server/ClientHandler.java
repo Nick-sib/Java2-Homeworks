@@ -4,8 +4,12 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
 
 public class ClientHandler {
+    private static final int SOCKET_TIMEOUT = 120 * 1000;
+
     Server server;
     Socket socket = null;
     DataInputStream in;
@@ -23,12 +27,12 @@ public class ClientHandler {
 
             new Thread(() -> {
                 try {
-//                    socket.setSoTimeout(5000);
+                    //socket.setSoTimeout(SOCKET_TIMEOUT);
 
                     //цикл аутентификации
                     while (true) {
                         String str = in.readUTF();
-
+                        socket.setSoTimeout(SOCKET_TIMEOUT);
                         if (str.startsWith("/auth ")) {
                             String[] token = str.split("\\s");
                             if (token.length < 3) {
@@ -40,6 +44,7 @@ public class ClientHandler {
                             login = token[1];
                             if (newNick != null) {
                                 if (!server.isLoginAuthorized(login)) {
+                                    socket.setSoTimeout(0);
                                     sendMsg("/authok " + newNick);
                                     nick = newNick;
                                     server.subscribe(this);
@@ -69,6 +74,7 @@ public class ClientHandler {
 
                     }
                     //цикл работы
+
                     while (true) {
                         String str = in.readUTF();
 
@@ -92,8 +98,10 @@ public class ClientHandler {
                         }
                     }
                 }
-                ///
-
+                catch (SocketTimeoutException e_socet){
+                    sendMsg("/timeout");
+                    System.out.println("!!TIMEOUT!!");
+                }
                 catch (IOException e) {
                     e.printStackTrace();
                 } finally {

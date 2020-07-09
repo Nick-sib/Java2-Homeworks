@@ -125,6 +125,15 @@ public class Controller implements Initializable {
                             }
                         }
 
+                        if (str.equals("/timeout")) {
+                            in.close();
+                            out.close();
+                            socket.close();
+                            textArea.appendText("Отключен по таймауту\n");
+                            System.out.println("timeout");
+                            break;
+                        }
+
                         textArea.appendText(str + "\n");
                     }
 

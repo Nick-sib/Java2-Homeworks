@@ -1,0 +1,18 @@
+#main-window {
+    -fx-padding: 5;
+}
+
+#numBtn{
+    -fx-min-width: 45;
+    -fx-min-height: 45;
+    -fx-font-size: 15px;
+}
+
+#atnBtn{
+    -fx-min-width: 45;
+    -fx-min-height: 45;
+    -fx-font-size: 19px;
+
+    -fx-background-color: #d7e1d4;
+    -fx-font-weight: bold;
+}
